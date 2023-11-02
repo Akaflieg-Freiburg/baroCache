@@ -2,12 +2,25 @@
 #pragma once
 
 #include <QGeoPositionInfo>
-
+//#include "spline.h"
 #include "Distance.h"
+#include <QTime>
 
 
 namespace Navigation
 {
+
+#define TIME_WINDOW 20u
+#define ALTITUDE_DISTANCE 50u
+
+typedef struct
+{
+    QDateTime timestamp;
+	Units::Distance pressureAltitude;
+	Units::Distance geometricAltitude;
+} altitude_element;
+
+
 
 class BaroCache : public QObject
 {
@@ -61,6 +74,11 @@ public:
      */
     Units::Distance estimatedGeometricAltitude(Units::Distance pressureAltitude, bool allowImpreciseEstimate=false);
 
+    /*! \brief for testing
+     *
+     */
+    void printAltitudeList();
+
 public slots:
     /*! \brief This slot is called whenever a pressure altitude reading comes in from a traffic data receiver (e.g. FLARM)
      *
@@ -76,6 +94,7 @@ public slots:
 
 private:
     Q_DISABLE_COPY_MOVE(BaroCache)
+    QVector<altitude_element> altitudeList;
 };
 
 } // namespace Navigation
