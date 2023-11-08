@@ -2,7 +2,7 @@
 #pragma once
 
 #include <QGeoPositionInfo>
-//#include "spline.h"
+#include "spline.h"
 #include "Distance.h"
 #include <QTime>
 

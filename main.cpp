@@ -17,7 +17,7 @@ auto main(int argc, char *argv[]) -> int
     QGeoCoordinate* coordinate = new QGeoCoordinate(1.0,1.0,1.0);
     QGeoPositionInfo* info = new QGeoPositionInfo(*coordinate, QDateTime::currentDateTime());
 
-    for(double height_pressure = 0.0, height_geometric = 0.0; height_pressure <= 5000; height_pressure += 300, height_geometric += 300.0)
+    for(double height_pressure = 0.0, height_geometric = 0.0; height_pressure <= 5000; height_pressure += 300, height_geometric += 500.0)
     {
         baroCache.onPressureAltitudeReceived(Units::Distance::fromM(height_pressure));
 
@@ -34,5 +34,7 @@ auto main(int argc, char *argv[]) -> int
         baroCache.onPressureAltitudeReceived(Units::Distance::fromM(height));
     }
     baroCache.printAltitudeList();
+
+    qDebug() << "estimated pressure altitude: " << baroCache.estimatedPressureAltitude(Units::Distance::fromM(4660),false).toM();
     return 0;
 }

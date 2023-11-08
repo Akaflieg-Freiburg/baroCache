@@ -10,13 +10,37 @@ Navigation::BaroCache::BaroCache(QObject* parent)
 Units::Distance Navigation::BaroCache::estimatedPressureAltitude(Units::Distance geometricAltitude, bool allowImpreciseEstimate)
 {
 #warning Implement
-    return {};
+    std::vector<double> pressureAltitudeList;
+    std::vector<double> geometricAltitudeList;
+    for(int i = 0; i < altitudeList.size(); i++)
+    {
+        if((altitudeList.at(i).pressureAltitude.toM() > 0.0) && (altitudeList.at(i).geometricAltitude.toM() > 0.0))
+        {
+            pressureAltitudeList.push_back(altitudeList.at(i).pressureAltitude.toM());
+            geometricAltitudeList.push_back(altitudeList.at(i).geometricAltitude.toM());
+        }
+    }
+    tk::spline s(geometricAltitudeList, pressureAltitudeList);
+    double value = s(geometricAltitude.toM());
+    return Units::Distance::fromM(value);
 }
 
 Units::Distance Navigation::BaroCache::estimatedGeometricAltitude(Units::Distance pressureAltitude, bool allowImpreciseEstimate)
 {
 #warning Implement
-    return {};
+    std::vector<double> pressureAltitudeList;
+    std::vector<double> geometricAltitudeList;
+    for(int i = 0; i < altitudeList.size(); i++)
+    {
+        if((altitudeList.at(i).pressureAltitude.toM() > 0.0) && (altitudeList.at(i).geometricAltitude.toM() > 0.0))
+        {
+            pressureAltitudeList.push_back(altitudeList.at(i).pressureAltitude.toM());
+            geometricAltitudeList.push_back(altitudeList.at(i).geometricAltitude.toM());
+        }
+    }
+    tk::spline s(pressureAltitudeList, geometricAltitudeList);
+    double value = s(pressureAltitude.toM());
+    return Units::Distance::fromM(value);
 }
 
 void Navigation::BaroCache::onPressureAltitudeReceived(Units::Distance pressureAltitude)
