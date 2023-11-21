@@ -6,12 +6,13 @@
 #include "Distance.h"
 #include <QTime>
 
+#define TIME_WINDOW 20u
+#define ALTITUDE_DISTANCE 50u
+#define DELETE_TIME 3600000UL
+
 
 namespace Navigation
 {
-
-#define TIME_WINDOW 20u
-#define ALTITUDE_DISTANCE 50u
 
 typedef struct
 {

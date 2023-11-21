@@ -71,6 +71,11 @@ void Navigation::BaroCache::onPressureAltitudeReceived(Units::Distance pressureA
             {
                 altitudeList.insert(i + 1, element);
             }
+            //remove element if its too old
+            else if(altitudeList.at(i).timestamp.time().msecsTo(QTime::currentTime()) > 3600000UL)
+            {
+                altitudeList.removeAt(i);
+            }
         }
 
         //check last element
@@ -120,6 +125,11 @@ void Navigation::BaroCache::onGeometricPositionInfoReceived(const QGeoPositionIn
             {
                 altitudeList.insert(i + 1, element);
                 break;
+            }
+            //remove element if its too old
+            else if(altitudeList.at(i).timestamp.time().msecsTo(QTime::currentTime()) > 3600000UL)
+            {
+                altitudeList.removeAt(i);
             }
         }
         //check last element
